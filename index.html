@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JEE Main Percentile to Rank Converter</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        width: 80%;
+        max-width: 600px;
+        margin: 100px auto;
+        padding: 20px;
+        border-radius: 10px;
+        background: linear-gradient(145deg, #e0e0e0, #ffffff);
+        box-shadow: 10px 10px 20px #c0c0c0,
+                    -10px -10px 20px #ffffff;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .container:hover {
+        transform: translateY(-5px);
+        box-shadow: 15px 15px 30px #c0c0c0,
+                    -15px -15px 30px #ffffff;
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #007bff;
+        text-transform: uppercase;
+    }
+    label {
+        font-weight: bold;
+        color: #333;
+    }
+    input[type="number"], select, button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        transition: all 0.3s;
+    }
+    input[type="number"]:focus, select:focus, button:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    button {
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    #result {
+        margin-top: 10px;
+        font-weight: bold;
+        text-align: center;
+        color: #333;
+    }
+    .attribution {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 12px;
+        color: #777;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>JEE Main 2024 Percentile to Rank Converter</h2>
+    <label for="percentile">Enter Percentile:</label>
+    <input type="number" id="percentile" min="0" max="100" step="0.01" placeholder="Enter percentile">
+    <label for="category">Select Category:</label>
+    <select id="category">
+        <option value="General">General</option>
+        <option value="EWS">EWS</option>
+        <option value="OBC-NCL">OBC-NCL</option>
+        <option value="SC">SC</option>
+        <option value="ST">ST</option>
+    </select>
+    <button onclick="convertPercentileToRank()">Convert</button>
+    <div id="result"></div>
+    <div class="attribution">Made by <a href="https://www.reddit.com/user/ApprehensiveScale780" target="_blank">u/ApprehensiveScale780</a></div>
+</div>
+
+<script>
+    function convertPercentileToRank() {
+        const percentile = parseFloat(document.getElementById("percentile").value);
+        const category = document.getElementById("category").value;
+        let totalStudents;
+        let categoryRank = '';
+
+        switch(category) {
+            case 'General':
+                totalStudents = 1221615;
+                break;
+            case 'EWS':
+                totalStudents = 154840;
+                categoryRank = 'EWS Rank';
+                break;
+            case 'OBC-NCL':
+                totalStudents = 498179;
+                categoryRank = 'OBC-NCL Rank';
+                break;
+            case 'SC':
+                totalStudents = 121394;
+                categoryRank = 'SC Rank';
+                break;
+            case 'ST':
+                totalStudents = 41375;
+                categoryRank = 'ST Rank';
+                break;
+            default:
+                totalStudents = 1221615;
+        }
+
+        if (isNaN(percentile) || percentile < 0 || percentile > 100) {
+            alert("Please enter a valid percentile value between 0 and 100.");
+            return;
+        }
+
+        const categoryRankValue = Math.ceil((100 - percentile) * totalStudents / 100);
+        const generalRank = Math.ceil((100 - percentile) * 1221615 / 100);
+        let resultText;
+        if(category === 'General') {
+            resultText = `Estimated General Rank: ${generalRank}`;
+        } else {
+            resultText = `Estimated General Rank: ${generalRank}<br>${categoryRank}: ${categoryRankValue}`;
+        }
+        document.getElementById("result").innerHTML = resultText;
+    }
+</script>
+
+</body>
+</html>
